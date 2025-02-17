@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Yekan';
+    src: url('./assets/fonts/BYekan.eot');
+    src: url('./assets/fonts/BYekan.eot') format('embedded-opentype'),
+    url('./assets/fonts/BYekan.woff') format('woff'),
+    url('./assets/fonts/BYekan.ttf') format('truetype');
+}
+body{
+    direction: rtl;
+    font-family: 'Yekan' !important;
+}
+.footerGif{
+    background: url('./assets/images/footerGif.gif');
+}
+.headerImg{
+    background: #a15bb4;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.shadoww{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.flex-6{
+    flex: 6;
+}
+.flex-5{
+    flex: 5;
+}
+.flex-4{
+    flex: 4;
+}
+.flex-3{
+    flex: 3;
+}
+.flex-2{
+    flex: 2;
+}
+.flex-1{
+    flex: 1;
+}
+.MuiPaper-root ul{
+    background-color: #a15bb4 !important;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
@@ -17,6 +17,14 @@ import ProfilePage from "./pages/ProfilePage";
 import FavoritePage from "./pages/FavoritesPage";
 
 const App = () => {
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetch("https://eccommerce-node-production.up.railway.app/")
+      .then((res) => res.text())
+      .then((data) => setMessage(data));
+  }, []);
+  console.log(message);
   return (
     <div>
       <BrowserRouter>

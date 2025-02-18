@@ -9,7 +9,7 @@ const Products = ({ category, filters, sort, quantity }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // const fetchInfo = async()=>{
-  // await fetch('http://ecommercedata.up.railway.app/api/product/allProducts')
+  // await fetch('https://ecommercedata.up.railway.app/api/product/allProducts')
   // .then((res)=> res.json())
   // .then((data)=>{setProducts(data)})
 
@@ -20,8 +20,8 @@ const Products = ({ category, filters, sort, quantity }) => {
       try {
         const res = await axios.get(
           category
-            ? `http://ecommercedata.up.railway.app/api/product/products?category=${category}`
-            : "http://ecommercedata.up.railway.app/api/product/products"
+            ? `https://ecommercedata.up.railway.app/api/product/products?category=${category}`
+            : "https://ecommercedata.up.railway.app/api/product/products"
         );
         setProducts(res.data);
       } catch (err) {}

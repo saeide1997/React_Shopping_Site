@@ -9,7 +9,6 @@
 // import MenuItem from '@mui/material/MenuItem';
 // import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-
 // const Navbar = () => {
 //   const user = JSON.parse(localStorage.getItem('user'))
 //   const quantity = useSelector((state) => state.cart.quantity);
@@ -41,7 +40,7 @@
 //             if (user) {
 //               return (
 //                 <div className="flex">
-                 
+
 //                   <div className="mx-3 text-white !w-[100px] text-[20px] cursor-pointer">
 //                     <PopupState variant="popover" popupId="demo-popup-menu">
 //                       {(popupState) => (
@@ -106,18 +105,38 @@
 // };
 
 // export default Navbar;
-import { useState } from "react";
+import { Badge } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/AuthProvider";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Home, ShoppingBag, User, Heart } from "lucide-react";
+import { ShoppingCartOutlined } from "@mui/icons-material";
+
 
 export default function Tapbar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const quantity = useSelector((state) => state.cart.quantity);
+  const favQuantity = useSelector((state) => state.favorite.quantity);
+  const userFunction = useAuth();
+  const location = useLocation(); // برای دریافت مسیر فعلی
   const [active, setActive] = useState("home");
 
+  useEffect(() => {
+    const currentTab = tabs.find((tab) => tab.path === location.pathname);
+    if (currentTab) {
+      setActive(currentTab.id);
+    }
+  }, [location.pathname]); // هر بار که مسیر تغییر کرد، `active` به‌روز شود.
+
   const tabs = [
-    { id: "home", label: "خانه", icon: <Home size={24} /> },
-    { id: "shop", label: "فروشگاه", icon: <ShoppingBag size={24} /> },
-    { id: "wishlist", label: "علاقه‌مندی‌ها", icon: <Heart size={24} /> },
-    { id: "profile", label: "پروفایل", icon: <User size={24} /> },
+    { id: "home", label: "خانه", icon: (<Home size={24} className="text-white"/>), path: "/" },
+    { id: "shop", label: "فروشگاه", icon: (<ShoppingBag size={24} className="text-white"/>), path: "/cart" },
+    { id: "wishlist", label: "علاقه‌مندی‌ها", icon: (<Heart size={24} className="text-white"/>), path: "/favorite" },
+    { id: "profile", label: user ? "پروفایل" : "ورود", icon: (<User size={24} className="text-white"/>), path: "/profile" },
   ];
 
   return (
@@ -134,7 +153,9 @@ export default function Tapbar() {
               className="absolute -top-1 w-16 h-16 bg-purple-500 dark:bg-fuchsia-900/90 rounded-full"
             />
           )}
-          <span className="relative z-10">{tab.icon}</span>
+          <Link to={tab.path} className="relative z-10">
+            {tab.icon}
+          </Link>
           <span className="relative z-10 text-xs mt-1">{tab.label}</span>
         </button>
       ))}

@@ -12,6 +12,7 @@
 body{
     direction: rtl;
     font-family: 'Yekan' !important;
+    background: #f2f3f5 !important;
 }
 .footerGif{
     background: url('./assets/images/footerGif.gif');

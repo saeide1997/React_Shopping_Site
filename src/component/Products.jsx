@@ -58,7 +58,7 @@ const Products = ({ category, filters, sort, quantity }) => {
 
   return (
     <div className="shadoww m-4 ">
-        <h3 className="pt-10 pr-10 text-gray-500">آخرین محصولات</h3>
+        <h3 className="pt-10 pr-10 text-gray-800">آخرین محصولات</h3>
       <div className="flex p-5 flex-wrap justify-between ">
         {category
           ? filteredProducts.map((item) => (

@@ -8,100 +8,77 @@ const CartPage = () => {
   return (
     <div>
       <Navbar />
-      <div className="p-5">
-        <h1 className="font-[300] text-center"></h1>
-        <div className="flex items-center p-5 justify-between">
-          <button className="p-2 font-[600] cursor-pointer w-[150px] border-2 border-gray-800 border-solid">
-            {" "}
-            ویرایش سبدخرید
+      <div className="p-5 mt-10">
+        <div className="flex items-center justify-between mb-6">
+          <button className="p-3 ml-2 text-sm font-bold cursor-pointer w-40 border-2 border-fuchsia-800/80 hover:bg-fuchsia-100/80 rounded-md">
+            ویرایش سبد خرید
           </button>
-          <div className="">
-            <span className="cursor-pointer underline ml-5">
-              سبد خرید({cart.products.length})
+          <div className="flex space-x-4 hidden sm:block">
+            <span className="cursor-pointer text-fuchsia-800/80 underline">
+              سبد خرید ({cart.products.length})
             </span>
-            <span className="cursor-pointer underline">لیست محبوب(۰)</span>
+            <span className="cursor-pointer text-fuchsia-800/80 underline">
+              لیست محبوب (۰)
+            </span>
           </div>
-          <button className="p-2 font-[600] cursor-pointer w-[150px] bg-pink-500 text-white">
+          <button className="p-3 font-bold cursor-pointer w-40 bg-fuchsia-800/80 text-white rounded-md hover:bg-fuchsia-600/80">
             تسویه
           </button>
         </div>
-        <div className=" flex justify-between">
-          <div className="" style={{ flex: "3" }}>
+        <div className="flex flex-wrap gap-6">
+          <div className="w-full lg:w-3/5">
             {cart.products.map((product) => (
-              <div className="flex justify-between">
-                <div className="flex-2 flex">
-                  <img
-                    className="w-[200px] h-[200px]"
-                    src={product.img}
-                    alt=""
-                  />
-                  <div className="p-5 flex flex-col justify-between">
-                    <div className="N">
-                      <b>محصول: </b>
-                      {product.title}
-                    </div>
-                    <div className="I">
-                      <b>کد: </b>
-                      {product._id}
-                    </div>
-                    <div
-                      className="w-[20px] h-[20px] rounded-full"
-                      style={{ background: product.color }}
-                    ></div>
-                    <div className="S">
-                      <b>سایز: </b>
-                      {product.size}
+              <div key={product._id} className="flex justify-between flex-col lg:flex-row mb-6 p-4 bg-gray-100 rounded-lg shadow-md">
+                <div className="flex flex-col lg:flex-row w-full">
+                  <img className="w-full lg:w-48 h-48 object-cover rounded-lg" src={product.img} alt={product.title} />
+                  <div className="ml-4 flex-1 flex flex-col justify-between p-4">
+                    <div className="font-semibold text-lg">{product.title}</div>
+                    <div className="text-sm text-gray-600">کد: {product._id}</div>
+                    <div className="flex items-center mt-2">
+                      <div
+                        className="w-6 h-6 rounded-full"
+                        style={{ background: product.color }}
+                      ></div>
+                      <span className="ml-2 text-sm">سایز: {product.size}</span>
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 flex items-center justify-center flex-col ">
-                  <div className="flex items-center">
-                    <Add />
-                    <div className="text-center text-[24px]">
-                      {product.quantity}
-                    </div>
-                    <Remove />
+                <div className="flex items-center justify-center flex-col mt-4 lg:mt-0">
+                  <div className="flex items-center space-x-4">
+                    <Add className="cursor-pointer text-fuchsia-500/80" />
+                    <div className="text-center text-xl font-bold">{product.quantity}</div>
+                    <Remove className="cursor-pointer text-fuchsia-500/80" />
                   </div>
-                  <div className="mt-5 text-[24px] ">
+                  <div className="mt-4 text-lg font-semibold">
                     {Intl.NumberFormat().format(product.price)} ریال
                   </div>
                 </div>
               </div>
             ))}
-            <hr className="text-pink-600 h-1 bg-pink-600" />
           </div>
 
-          <div
-            className=" border-1 border-solid justify-center items-center mr-5 border-pink-400/50 rounded-lg p-5 h-[50vh]"
-            style={{ flex: "1" }}
-          >
-            <h1 className="font-[200]">خلاصه سفارشات</h1>
-            <div className="my-7 mx-0 justify-between flex">
-              <span className="">جمع خرید</span>
-              <span className="">
-                {Intl.NumberFormat().format(cart.total)} ریال
-              </span>
+          <div className="w-full lg:w-1/3 bg-white rounded-lg p-6 shadow-lg border border-fuchsia-100/80">
+            <h2 className="text-xl font-semibold text-fuchsia-600/80 mb-6">خلاصه سفارشات</h2>
+            <div className="space-y-4">
+              <div className="flex justify-between text-lg">
+                <span>جمع خرید</span>
+                <span>{Intl.NumberFormat().format(cart.total)} ریال</span>
+              </div>
+              <div className="flex justify-between text-lg">
+                <span>تخفیف شما از خرید</span>
+                <span>{Intl.NumberFormat().format(cart.discount)} ریال</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold">
+                <span>مجموع</span>
+                <span>{Intl.NumberFormat().format(cart.total + cart.discount)} ریال</span>
+              </div>
             </div>
-            <div className="my-7 mx-0 justify-between flex">
-              <span className="">تخفیف شما از خرید</span>
-              <span className="">
-                {Intl.NumberFormat().format(cart.discount)} ریال
-              </span>
-            </div>
-            <div className="my-7 mx-0 justify-between flex font-[600]">
-              <span className=""> مجموع</span>
-              <span className="">
-                {Intl.NumberFormat().format(cart.total + cart.discount)} ریال
-              </span>
-            </div>
-            <button className="p-2 w-100 font-[600] items-center justify-center cursor-pointer bg-pink-500 text-white">
-              {" "}
+            <button className="w-full mt-6 py-3 bg-fuchsia-800/80 text-white rounded-md hover:bg-fuchsia-600/80 transition duration-200">
               تسویه
             </button>
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

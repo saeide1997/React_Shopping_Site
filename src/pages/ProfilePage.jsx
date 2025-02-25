@@ -8,200 +8,110 @@ import {
 } from "@mui/icons-material";
 import { useAuth } from "../hooks/AuthProvider";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { updateUser } from "../redux/apiCalls";
 import Navbar from "../component/Navbar";
 
 const ProfilePage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [userInf, setUserInf] = useState([]);
+  const [userInf, setUserInf] = useState({});
   const auth = useAuth();
 
   const handleChange = (e) => {
-    setUserInf((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
+    setUserInf((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     auth.updateUser(user._id, userInf);
-    document.getElementById("userName").value = "";
-    document.getElementById("fullname").value = "";
-    document.getElementById("role").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("mobile").value = "";
   };
+
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <div className=" p-5 items-start">
-        <div className=" flex justify-between items-center"></div>
-        <div className=" flex ">
-          <div className="flex-1 w-full p-5 shadow flex-col">
-            <div className=" flex items-center">
-              <img
-                className="w-10 h-10 ml-10 rounded-full object-cover"
-                src="https://cdn-icons-png.flaticon.com/512/219/219969.png"
-                alt=""
-              />
-              <div className="flex flex-col justify-between">
-                <span className="boldShab">{user.fullname} </span>
-                <span className="">{user.role} </span>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base boldShab text-gray-600 my-4">
-                اطلاعات حساب
-              </span>
-              <div className="flex items-center mb-3 text-gray-800">
-                <PermIdentity className="text-base" />
-                <span className="mr-1">{user.userName}</span>
-              </div>
-              <div className="flex items-center mb-3 text-gray-800">
-                <CalendarToday className="text-base" />
-                <span className="mr-1">{user.role}</span>
-              </div>
-              <span className="text-base boldShab text-gray-600 my-4">
-                اطلاعات کاربر
-              </span>
-              <div className="flex items-center mb-3 text-gray-800">
-                <PhoneAndroid className="text-base" />
-                <span className="mr-1">{user.mobile}</span>
-              </div>
-              <div className="flex items-center mb-3 text-gray-800">
-                <MailOutline className="text-base" />
-                <span className="mr-1">{user.email}</span>
-              </div>
-              <div className="flex items-center mb-3 text-gray-800">
-                <LocationSearching className="text-base" />
-                <span className="mr-1">ایران. تبریز</span>
-              </div>
+      <div className="container mt-4 mx-auto p-5 flex flex-col lg:flex-row gap-6">
+        {/* بخش اطلاعات کاربر */}
+        <div className="bg-white shadow-lg rounded-xl p-6 w-full lg:w-1/3">
+          <div className="flex items-center gap-4">
+            <img
+              className="w-16 h-16 rounded-full object-cover"
+              src="https://cdn-icons-png.flaticon.com/512/219/219969.png"
+              alt="User Avatar"
+            />
+            <div>
+              <h2 className="text-xl font-semibold">{user.fullname}</h2>
+              <p className="text-gray-500">{user.role}</p>
             </div>
           </div>
-          <div className="flex-4 mr-5 p-5 shadow flex flex-col">
-            <span className="text-2xl">ویرایش</span>
-            <form className="flex justify-between mt-5" action="" 
-                  onSubmit={handleClick}>
-              <div className="flex-3 flex flex-wrap">
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    نام کاربری
-                  </label>
-                  <input
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    type="text"
-                    required
-                    placeholder={user.userName}
-                    name="userName"
-                    id="userName"
-                  />
-                </div>
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    نام و نام خانوادگی{" "}
-                  </label>
-                  <input
-                    required 
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    type="text"
-                    aria-required="true"
-                    placeholder={user.fullname}
-                    name="fullname"
-                    id="fullname"
-                  />
-                </div>
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    نقش{" "}
-                  </label>
-                  <input
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    required
-                    type="text"
-                    placeholder={user.role}
-                    name="role"
-                    id="role"
-                  />
-                </div>
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    شماره تماس{" "}
-                  </label>
-                  <input
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    type="tel"
-                    required
-                    placeholder={user.mobile}
-                    name="mobile"
-                    id="mobile"
-                  />
-                </div>
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    ایمیل{" "}
-                  </label>
-                  <input
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    type="email"
-                    required
-                    placeholder={user.email}
-                    name="email"
-                    id="email"
-                  />
-                </div>
-                <div className="flex flex-col w-[50%] mt-3 mb-10">
-                  <label className="mb-1 text-base" htmlFor="">
-                    رمز عبور{" "}
-                  </label>
-                  <input
-                    className=" w-[250px] h-8"
-                    onChange={handleChange}
-                    style={{ borderBottom: "1px solid gray" }}
-                    type="password"
-                    required
-                    placeholder="*********"
-                    name="password"
-                    id="password"
-                  />
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col justify-between">
-                <div className="flex justify-center items-center">
-                  <label htmlFor="img">
-                    <Publish className="cursor-pointer" />
-                  </label>
-                  <input className="hidden" type="file" name="img" id="img" />
-                  <img
-                    className="w-24 h-24"
-                    src="https://cdn-icons-png.flaticon.com/512/219/219969.png"
-                    alt=""
-                  />
-                </div>
-                <input
-                  type="submit"
-                  value="به روز رسانی"
-                  className="p-1 rounded-md bg-teal-600 text-white"
-                />
-              </div>
-            </form>
+          <div className="mt-6 space-y-3">
+            <div className="info-item">
+              <PermIdentity className="icon" />
+              <span>{user.userName}</span>
+            </div>
+            <div className="info-item">
+              <CalendarToday className="icon" />
+              <span>{user.role}</span>
+            </div>
+            <div className="info-item">
+              <PhoneAndroid className="icon" />
+              <span>{user.mobile}</span>
+            </div>
+            <div className="info-item">
+              <MailOutline className="icon" />
+              <span>{user.email}</span>
+            </div>
+            <div className="info-item">
+              <LocationSearching className="icon" />
+              <span>ایران، تبریز</span>
+            </div>
           </div>
+        </div>
+
+        {/* فرم ویرایش اطلاعات */}
+        <div className="bg-white shadow-lg rounded-xl p-6 w-full lg:w-2/3">
+          <h2 className="text-2xl font-semibold">ویرایش اطلاعات</h2>
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6" onSubmit={handleSubmit}>
+            <InputField label="نام کاربری" name="userName" placeholder={user.userName} onChange={handleChange} />
+            <InputField label="نام و نام خانوادگی" name="fullname" placeholder={user.fullname} onChange={handleChange} />
+            <InputField label="نقش" name="role" placeholder={user.role} onChange={handleChange} />
+            <InputField label="شماره تماس" name="mobile" type="tel" placeholder={user.mobile} onChange={handleChange} />
+            <InputField label="ایمیل" name="email" type="email" placeholder={user.email} onChange={handleChange} />
+            <InputField label="رمز عبور" name="password" type="password" placeholder="*********" onChange={handleChange} />
+
+            <div className="col-span-2 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <label htmlFor="img" className="cursor-pointer">
+                  <Publish className="text-gray-500 hover:text-gray-800 transition-all" />
+                </label>
+                <input className="hidden" type="file" name="img" id="img" />
+                <img className="w-20 h-20 rounded-full" src="https://cdn-icons-png.flaticon.com/512/219/219969.png" alt="" />
+              </div>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-fuchsia-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition-all"
+              >
+                به‌روز‌رسانی
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   );
 };
+
+const InputField = ({ label, name, type = "text", placeholder, onChange }) => (
+  <div className="flex flex-col">
+    <label className="mb-1 text-gray-700 font-medium">{label}</label>
+    <input
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      onChange={onChange}
+      className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+    />
+  </div>
+);
 
 export default ProfilePage;

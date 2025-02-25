@@ -3,28 +3,41 @@ import { useAuth } from "../hooks/AuthProvider";
 
 const LoginPage = () => {
 
-    const [userName, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [userName, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const auth = useAuth();
 
-    const handleClick = async (e)=>{
-        e.preventDefault()
+    const handleClick = async (e) => {
+        e.preventDefault();
         if (userName !== "" && password !== "") {
-          auth.loginAction({userName: userName,
-          password: password});
-          return;
+            auth.loginAction({ userName: userName, password: password });
+            return;
         }
     }
 
     return (
-
-        <div className="w-[100vw] h-[100vh] bg-pink-300/50 flex items-center justify-center">
-            <div className="p-5 w-[25%]  bg-white">
-                <h1 className="text-[24px]  text-center">به SOHO خوش آمدید.</h1>
-                <form className="items-center flex flex-col justify-center" action="">
-                    <input className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600" type="text" name="" onChange = {(e) => setUsername(e.target.value)} id="" placeholder="نام کاربری" />
-                    <input className="flex-1 min-w-[40%] mt-4 ml-4 p-2 border-1 border-pink-600" type="password" name="" onChange = {(e) => setPassword(e.target.value)} id="" placeholder="رمز" />
-                    <button className="border-1 border-pink-600 px-5 py-2 mt-5 justify-center items-center  hover:bg-pink-100" onClick={handleClick}>ورود </button>
+        <div className="w-full h-screen bg-gradient-to-r from-fuchsia-800/80 to-fuchsia-900/70 flex items-center justify-center">
+            <div className="bg-white p-6 md:w-[400px] w-[90%] rounded-lg shadow-md">
+                <h1 className="text-2xl font-semibold text-center text-fuchsia-500 mb-6">به SOHO خوش آمدید.</h1>
+                <form className="flex flex-col items-center" onSubmit={handleClick}>
+                    <input
+                        className="w-full mt-3 p-3 border border-fuchsia-600 rounded-md focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
+                        type="text"
+                        placeholder="نام کاربری"
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <input
+                        className="w-full mt-4 p-3 border border-fuchsia-600 rounded-md focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
+                        type="password"
+                        placeholder="رمز عبور"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        type="submit"
+                        className="w-full mt-5 py-3 bg-gradient-to-r from-fuchsia-600 to-fuchsia-900/70 text-white rounded-md hover:bg-fuchsia-700 transition duration-200"
+                    >
+                        ورود
+                    </button>
                 </form>
             </div>
         </div>

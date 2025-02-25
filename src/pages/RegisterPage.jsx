@@ -18,75 +18,35 @@ const RegisterPage = () => {
       ...userInf,
       role: "user",
     };
-    auth.registerAction(user)
+    auth.registerAction(user);
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-pink-300/50 flex items-center justify-center">
-      <div className="p-5 w-[40%]  bg-white">
-        <h1 className="text-[24px] text-center">به SOHO خوش آمدید.</h1>
-        <form className=" flex flex-wrap items-center justify-center" action="">
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="text"
-            onChange={handleChange}
-            name="fullname"
-            id="fullname"
-            placeholder="نام "
-          />
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="text"
-            onChange={handleChange}
-            name="userName"
-            id="userName"
-            placeholder="نام کاربری"
-          />
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="text"
-            onChange={handleChange}
-            name="mobile"
-            id="mobile"
-            placeholder="موبایل"
-          />
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="email"
-            onChange={handleChange}
-            name="email"
-            id="email"
-            placeholder="ایمیل"
-          />
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="password"
-            onChange={handleChange}
-            name="password"
-            id="password"
-            placeholder="رمز"
-          />
-          <input
-            className="flex-1 min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="password"
-            name=""
-            id=""
-            placeholder="تکرار رمز"
-          />
-          <input
-            className="flex-1 hidden min-w-[40%] mt-5 ml-4 p-2 border-1 border-pink-600"
-            type="text"
-            onChange={handleChange}
-            name="role"
-            id="role"
-          />
-          <div className="flex-1 min-w-[100%] mt-5">
-            <input className="p-1 ml-3" type="checkbox" name="checkbox" id="" />
-            <label for="checkbox">شرایط و ضوابط را میپزیرم.</label>
+    <div className="w-screen h-screen bg-gradient-to-r from-fuchsia-800/80 to-fuchsia-900/70 flex items-center justify-center">
+      <div className="p-6 sm:p-10 bg-white shadow-2xl rounded-2xl w-[90%] sm:w-3/4 lg:w-1/2 xl:w-1/3 flex flex-col">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-center text-gray-800">
+          به <span className="text-fuchsia-500 font-bold">SOHO</span> خوش آمدید
+        </h1>
+        <p className="text-gray-500 text-center mt-2">لطفاً اطلاعات خود را وارد کنید.</p>
+        
+        <form className="mt-6 flex flex-col gap-4">
+          <input className="input-field" type="text" onChange={handleChange} name="fullname" placeholder="نام کامل" />
+          <input className="input-field" type="text" onChange={handleChange} name="userName" placeholder="نام کاربری" />
+          <input className="input-field" type="text" onChange={handleChange} name="mobile" placeholder="موبایل" />
+          <input className="input-field" type="email" onChange={handleChange} name="email" placeholder="ایمیل" />
+          <input className="input-field" type="password" onChange={handleChange} name="password" placeholder="رمز عبور" />
+          <input className="input-field" type="password" placeholder="تکرار رمز عبور" />
+
+          <div className="flex items-center gap-2 mt-2">
+            <input type="checkbox" id="terms" className="w-4 h-4 text-fuchsia-500" />
+            <label htmlFor="terms" className="text-sm text-gray-600">
+              شرایط و ضوابط را می‌پذیرم.
+            </label>
           </div>
+
           <button
             onClick={handleClick}
-            className="border-1 border-pink-600 px-5 py-2 mt-5 justify-center items-center hover:bg-pink-100"
+            className="mt-4 bg-gradient-to-r from-fuchsia-500 to-fuchsia-600 text-white py-2 rounded-xl shadow-md text-lg font-semibold hover:opacity-90 transition-all"
           >
             ثبت نام
           </button>

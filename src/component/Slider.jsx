@@ -1,52 +1,35 @@
 import Carousel from 'react-bootstrap/Carousel';
-// import ExampleCarouselImage from 'components/ExampleCarouselImage'
-import img1 from '../assets/images/rings-png.png'
-import img2 from '../assets/images/necklace jewelry-png.png'
-
+import img1 from '../assets/images/rings-png.png';
+import img2 from '../assets/images/necklace jewelry-png.png';
 
 const Slider = () => {
-
-    // const wraper = styled.div`
-    //     height : 100%;
-    //     display : flex;
-    //     transition : all 1.5s e;
-    //     transform : translateX(${(props)=>props.slideIndex * -100}vW)
-    // `;
-
-
     return (
-        <div className="m-4 shadoww  ">
-            <Carousel data-bs-theme="dark" className="h-[70vh] mt-20 w-[100%] bg-white">
-                <Carousel.Item className="">
-                    <div className=" flex">
-                        <div className="flex-1 relative">
-                            {/* <div className="z-0 w-[50%] h-[60%] rounded-full m-10 bg-fuchsia-900/70 absolute"></div> */}
-                            <div className=" relative" >
-                                <img className=" h-[80vh] "  src={img1} alt="First slide"/>
-                             </div>
-                            
+        <div className="m-4 shadow-lg rounded-xl overflow-hidden">
+            <Carousel data-bs-theme="dark" className="w-full">
+                <Carousel.Item>
+                    <div className="flex flex-col md:flex-row items-center md:items-start justify-between w-full p-5">
+                        <div className="flex-1 bg-inherit relative">
+                            <img className="h-[70vh] w-full object-cover " src={img1} alt="Discounts" />
                         </div>
-                        <div className="flex-1 mt-16 p-5">
-                            <h3 className="mb-5">تخفیفات تابستانه</h3>
-                            <p>تخفیفات تابستانه را از دست ندهید...</p>
-                            <button className="border-1 p-2 border-gray-600 mt-5">مشاهده کنید</button>
+                        <div className="flex-1 mt-6 md:mt-0 md:p-5 text-center md:text-left">
+                            <h3 className="text-2xl font-semibold text-gray-800 mb-4">تخفیفات تابستانه</h3>
+                            <p className="text-gray-600 mb-6">تخفیفات تابستانه را از دست ندهید...</p>
+                            <button className="px-6 py-2 bg-fuchsia-600 text-white rounded-full shadow hover:bg-fuchsia-700 transition duration-300">
+                                مشاهده کنید
+                            </button>
                         </div>
                     </div>
                 </Carousel.Item>
-                <Carousel.Item >
-                    <div className=" flex">
-                        <div className=" flex-1">
+                <Carousel.Item>
+                    <div className="flex flex-col md:flex-row items-center md:items-start justify-between w-full  p-5">
                         <div className="flex-1 relative">
-                            {/* <div className="z-0 w-[40%] h-[50%] rounded-full mr-[40%] mt-56 bg-black/50 absolute"></div> */}
-                            <div className=" relative" >
-                                <img className=" h-[80vh] "  src='https://pngimg.com/d/necklace_PNG30.png' alt="First slide"/>
-                            </div>
-                        </div>
-                        </div>
-                        <div className="flex-1 mt-16 p-5">
-                            <h3 className="mb-5">تخفیفات آخر فصل</h3>
-                            <p>تخفیفات آخر فصل را از دست ندهید...</p>
-                            <button className="border-1 p-2 border-gray-600 mt-5">مشاهده کنید</button>
+                        <img className=" h-[70vh] w-full object-cover"  src='https://pngimg.com/d/necklace_PNG30.png' alt="First slide"/>                        </div>
+                        <div className="flex-1 mt-6 md:mt-0 md:p-5 text-center md:text-left">
+                            <h3 className="text-2xl font-semibold text-gray-800 mb-4">تخفیفات آخر فصل</h3>
+                            <p className="text-gray-600 mb-6">تخفیفات آخر فصل را از دست ندهید...</p>
+                            <button className="px-6 py-2 bg-fuchsia-600 text-white rounded-full shadow hover:bg-fuchsia-700 transition duration-300">
+                                مشاهده کنید
+                            </button>
                         </div>
                     </div>
                 </Carousel.Item>

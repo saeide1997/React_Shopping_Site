@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.08691fae.css",
-    "main.js": "/static/js/main.b1c3a35f.js",
+    "main.css": "/static/css/main.e5ae6a1c.css",
+    "main.js": "/static/js/main.dc72f251.js",
     "static/js/453.80d5489f.chunk.js": "/static/js/453.80d5489f.chunk.js",
     "static/media/rings-png.png": "/static/media/rings-png.db84f2be602b532d5061.png",
     "static/media/necklace jewelry-png.png": "/static/media/necklace jewelry-png.58052965b1b7a97b667d.png",
@@ -10,12 +10,12 @@
     "static/media/BYekan.ttf": "/static/media/BYekan.f717454db8f70fbcd198.ttf",
     "static/media/BYekan.woff": "/static/media/BYekan.cc0dbf9e16189e73a7be.woff",
     "index.html": "/index.html",
-    "main.08691fae.css.map": "/static/css/main.08691fae.css.map",
-    "main.b1c3a35f.js.map": "/static/js/main.b1c3a35f.js.map",
+    "main.e5ae6a1c.css.map": "/static/css/main.e5ae6a1c.css.map",
+    "main.dc72f251.js.map": "/static/js/main.dc72f251.js.map",
     "453.80d5489f.chunk.js.map": "/static/js/453.80d5489f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.08691fae.css",
-    "static/js/main.b1c3a35f.js"
+    "static/css/main.e5ae6a1c.css",
+    "static/js/main.dc72f251.js"
   ]
 }

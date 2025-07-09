@@ -1,3 +1,3 @@
-// fetch('https://ecommercedata.up.railway.app/api/products')
+// fetch('https://eccommerce.liara.run/api/products')
 //     .then((res) => res.json())
 //     .then((data) => console.log(data)) 

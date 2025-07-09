@@ -20,7 +20,7 @@ const App = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("https://ecommercedata.up.railway.app/")
+    fetch("https://eccommerce.liara.run/")
       .then((res) => res.text())
       .then((data) => setMessage(data));
   }, []);

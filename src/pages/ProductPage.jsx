@@ -25,6 +25,8 @@ const ProductPage = () => {
       try {
         const res = await publicRequest.get("/product/find/" + id);
         setProduct(res.data);
+        if (res.data.size?.length) setSize(res.data.size[0]); // انتخاب پیش‌فرض سایز
+        if (res.data.color?.length) setColor(res.data.color[0]); // انتخاب پیش‌فرض رنگ
       } catch (err) {}
     };
     getProduct();
@@ -37,102 +39,118 @@ const ProductPage = () => {
       setQuantity(quantity + 1);
     }
   };
-  const cartt = useSelector((state) => state.cart);
 
   const handleClick = () => {
     dispatch(addProduct({ ...product, quantity, color, size }));
   };
+
   return (
-    <div className="bg-gray-100 !min-w-screen">
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className=" flex flex-col sm:flex-row items-center justify-center">
-        <div className=" w-[90%] sm:w-[95%] sm:flex-row mt-20 flex flex-col p-6 bg-white shadow-lg rounded-xl ">
-          <div className="flex-1 flex justify-center">
-            <img
-              className="w-2/4 h-auto object-contain"
-              src={product.img}
-              alt=""
+
+      <main className="container mt-5 mx-auto px-4 py-10 flex flex-col sm:flex-row gap-8">
+        {/* تصویر محصول */}
+        <div className="flex-1 flex justify-center items-center">
+          <img
+            src={product.img}
+            alt={product.title}
+            className="max-w-full max-h-[450px] object-contain rounded-xl shadow-md"
+          />
+        </div>
+
+        {/* اطلاعات محصول */}
+        <section className="flex-1 bg-white rounded-2xl p-6 shadow-lg flex flex-col justify-between">
+          <div>
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-4">{product.title}</h1>
+            <p className="text-gray-600 mb-6 leading-relaxed text-justify">{product.desc}</p>
+
+            <span className="block text-2xl font-semibold text-pink-600 mb-6">
+              {NumberFormat.format(product.price)} ریال
+            </span>
+
+            {/* انتخاب رنگ */}
+            <div className="mb-6">
+              <h5 className="font-semibold text-gray-700 mb-2">رنگ:</h5>
+              <div className="flex gap-3">
+                {product.color?.map((c) => (
+                  <button
+                    key={c}
+                    aria-label={`انتخاب رنگ ${c}`}
+                    className={`w-8 h-8 rounded-full border-2 focus:outline-none transition-transform hover:scale-110 ${
+                      color === c ? "border-pink-600 scale-125" : "border-gray-300"
+                    }`}
+                    style={{ backgroundColor: c }}
+                    onClick={() => setColor(c)}
+                    type="button"
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* انتخاب سایز */}
+            <div className="mb-6">
+              <h5 className="font-semibold text-gray-700 mb-2">اندازه:</h5>
+              <select
+                value={size}
+                onChange={(e) => setSize(e.target.value)}
+                className="w-full md:w-48 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-pink-400 focus:outline-none"
+              >
+                {product.size?.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <FormControlLabel
+              control={<Checkbox />}
+              label="موجود شد به من اطلاع بده"
+              className="mb-6"
             />
           </div>
-          <div className="flex-2">
-          <h1 className="font-bold text-xl md:text-2xl text-gray-800 mb-4">
-            {product.title}
-          </h1>
-          <p className="text-gray-600 mb-2 text-sm md:text-base">
-            {product.desc}
-          </p>
-          <span className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
-            {NumberFormat.format(product.price)} ریال
-          </span>
 
-          <div className="flex flex-wrap items-center my-2">
-            <h5 className="ml-3 text-gray-700 font-medium text-sm md:text-base">
-              رنگ:
-            </h5>
-            {product.color?.map((c) => (
-              <div
-                key={c}
-                className="w-6 h-6 md:w-8 md:h-8 rounded-full border border-gray-300 cursor-pointer mr-3"
-                style={{ background: c }}
-                onClick={() => setColor(c)}
-              ></div>
-            ))}
-          </div>
-
-          <div className="flex items-center my-2">
-            <h5 className="ml-3 text-gray-700 font-medium text-sm md:text-base">
-              اندازه:
-            </h5>
-            <select
-              className="h-8 px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 text-gray-700 focus:outline-none text-sm md:text-base"
-              onChange={(e) => setSize(e.target.value)}
-            >
-              {product.size?.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <FormControlLabel
-            control={<Checkbox />}
-            label="موجود شد به من اطلاع بده"
-            className="my-2 text-sm md:text-base !-m-2"
-          />
-
-          <div className="flex justify-between items-center mt-4">
-            <div className="flex items-center">
-              <Remove
-                className="cursor-pointer text-gray-700 w-6 h-6"
+          {/* کنترل تعداد و دکمه اضافه کردن به سبد */}
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <button
                 onClick={() => handleQuantity("des")}
-              />
-              <span className="mx-2 text-lg md:text-xl font-bold">
-                {quantity}
-              </span>
-              <Add
-                className="cursor-pointer text-gray-700 w-6 h-6"
+                disabled={quantity === 1}
+                className="p-1 rounded-full border border-gray-300 text-gray-700 hover:bg-pink-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                aria-label="کاهش تعداد"
+              >
+                <Remove fontSize="small" />
+              </button>
+              <span className="text-xl font-semibold">{quantity}</span>
+              <button
                 onClick={() => handleQuantity("inc")}
-              />
+                className="p-1 rounded-full border border-gray-300 text-gray-700 hover:bg-pink-100 transition"
+                aria-label="افزایش تعداد"
+              >
+                <Add fontSize="small" />
+              </button>
             </div>
 
             <button
               onClick={handleClick}
-              className="px-4 py-2 bg-pink-600 text-white rounded-lg shadow-md hover:bg-pink-700 transition duration-200 text-sm md:text-base"
+              className="px-6 py-2 bg-pink-600 text-white rounded-lg shadow-lg hover:bg-pink-700 transition duration-300 font-semibold"
+              aria-label="افزودن به سبد خرید"
             >
               افزودن به سبد خرید
             </button>
           </div>
 
-          <div className="flex justify-center mt-6">
-            <div className="flex items-center bg-pink-100 text-gray-700 p-2 rounded-md shadow-md hover:shadow-lg cursor-pointer text-sm md:text-base">
-              <FavoriteBorderOutlined className="mr-2" />
-              افزودن به علاقه مندی ها
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
+          {/* دکمه افزودن به علاقه‌مندی‌ها */}
+          <button
+            type="button"
+            className="mt-8 flex items-center justify-center gap-2 text-pink-600 border border-pink-600 rounded-lg px-4 py-2 hover:bg-pink-600 hover:text-white transition duration-300 font-medium shadow-sm"
+            aria-label="افزودن به علاقه‌مندی‌ها"
+          >
+            <FavoriteBorderOutlined />
+            افزودن به علاقه مندی‌ها
+          </button>
+        </section>
+      </main>
 
       {/* محصولات مشابه */}
       <Products quantity={4} />

@@ -1,19 +1,10 @@
-import { popularProducts } from "../data";
-import Product from "./Product";
-// import Product from '../../my-react/src/component/Product';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Product from "./Product";
 
 const Products = ({ category, filters, sort, quantity }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-  // const fetchInfo = async()=>{
-  // await fetch('https://eccommerce.liara.run/api/product/allProducts')
-  // .then((res)=> res.json())
-  // .then((data)=>{setProducts(data)})
-
-  // }
 
   useEffect(() => {
     const getProducts = async () => {
@@ -24,32 +15,35 @@ const Products = ({ category, filters, sort, quantity }) => {
             : "https://eccommerce.liara.run/api/product/products"
         );
         setProducts(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error("خطا در دریافت محصولات", err);
+      }
     };
     getProducts();
   }, [category]);
 
   useEffect(() => {
-    category &&
+    if (category && filters) {
       setFilteredProducts(
         products.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
+            item[key]?.includes(value)
           )
         )
       );
+    }
   }, [products, category, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
       setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+        [...prev].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
     } else if (sort === "asc") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.price - b.price)
       );
-    } else {
+    } else if (sort === "desc") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => b.price - a.price)
       );
@@ -57,19 +51,22 @@ const Products = ({ category, filters, sort, quantity }) => {
   }, [sort]);
 
   return (
-    <div className="shadoww m-4 ">
-        <h3 className="pt-10 pr-10 text-gray-800">آخرین محصولات</h3>
-      <div className="flex p-5 flex-wrap justify-between ">
-        {category
-          ? filteredProducts.map((item) => (
-              <Product item={item} key={item.id} />
-            ))
-          : products
-              .slice(0, quantity)
-              .map((item) => <Product item={item} key={item.id} />)}
-      </div>
+<div className="mb-4 p-6 bg-white rounded-2xl shadow-xl">
+  <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8 text-center sm:text-right tracking-tight">
+    آخرین محصولات
+  </h3>
+
+  {products.length === 0 ? (
+    <p className="text-gray-400 italic text-center py-12">محصولی یافت نشد</p>
+  ) : (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {(category ? filteredProducts : products.slice(0, quantity)).map(
+        (item) => <Product item={item} key={item._id || item.id} />
+      )}
     </div>
-  );
+  )}
+</div>
+)
 };
 
 export default Products;

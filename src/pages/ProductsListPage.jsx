@@ -14,17 +14,25 @@ const ProductsList = () => {
   const [sort, setSort] = useState("newest");
 
   const handleFilter = (e) => {
-    const value = e.target.value;
-    setFilter((prev) => ({
-      ...prev,
-      [e.target.name]: value,
-    }));
+    const { name, value } = e.target;
+    // اگر مقدار انتخاب شده خالی بود، فیلتر حذف شود
+    setFilter((prev) => {
+      if (value === "") {
+        const newFilter = { ...prev };
+        delete newFilter[name];
+        return newFilter;
+      }
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto mt-2 px-4">
         <h2 className="text-2xl font-bold text-gray-800 text-center my-6">
           {category || "محصولات"}
         </h2>
@@ -32,13 +40,14 @@ const ProductsList = () => {
         {/* فیلتر و مرتب‌سازی */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-4 rounded-lg shadow-sm">
           <div className="flex flex-wrap items-center gap-3">
-            <h5 className="text-gray-700 font-medium">فیلتر محصولات:</h5>
+            <span className="text-gray-700 font-medium">فیلتر محصولات:</span>
             <select
               name="color"
               onChange={handleFilter}
+              defaultValue=""
               className="h-[40px] px-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-gray-400"
             >
-              <option value="" disabled>
+              <option value="" disabled className="text-gray-400 cursor-not-allowed">
                 نوع
               </option>
               <option value="gold">طلایی</option>
@@ -49,9 +58,10 @@ const ProductsList = () => {
             <select
               name="size"
               onChange={handleFilter}
+              defaultValue=""
               className="h-[40px] px-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-gray-400"
             >
-              <option value="" disabled>
+              <option value="" disabled className="text-gray-400 cursor-not-allowed">
                 سایز
               </option>
               <option value="s">Small</option>
@@ -64,9 +74,10 @@ const ProductsList = () => {
 
           {/* مرتب‌سازی */}
           <div className="flex items-center justify-center md:justify-end gap-3">
-            <h5 className="text-gray-700 font-medium">ترتیب محصولات:</h5>
+            <span className="text-gray-700 font-medium">ترتیب محصولات:</span>
             <select
               onChange={(e) => setSort(e.target.value)}
+              value={sort}
               className="h-[40px] px-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-gray-400"
             >
               <option value="newest">تازه‌ترین</option>

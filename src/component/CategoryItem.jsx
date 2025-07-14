@@ -1,19 +1,26 @@
 import { Link } from "react-router-dom";
 
 const CategoryItem = ({ item }) => {
-    return (
-        <div className='flex-1 m-4 h-[20vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] !min-w-32 relative shadoww bg-fuchsia-100/50'>
-            <img className='w-[100%] h-[100%] object-contain' src={item.img} alt="" />
-            <div className='absolute w-[100%] h-[100%] top-0 left-0 flex items-center justify-center flex-col'>
-                {/* <h4 className='mb-5 text-pink-700 bold text-[60px]'>{item.title}</h4> */}
-                <button className='p-2 bg-fuchsia-200 rounded-md border-3 border-solid border-fuchsia-700'>
-                    <Link className="no-underline text-gray-900" to={`/products/${item.title}`}>
-                    حالا بخرید!
-                    </Link>
-                    </button>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="relative h-96 bg-fuchsia-100/50 rounded-xl shadow-lg overflow-hidden group transition-all duration-300 hover:scale-[1.02]">
+      {/* تصویر دسته‌بندی */}
+      <img
+        className="w-full h-full object-contain aspect-square"
+        src={item.img}
+        alt={item.title}
+      />
+
+      {/* لایه رویی و دکمه */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex items-center justify-center flex-col transition duration-300">
+        <Link
+          to={`/products/${item.title}`}
+          className="bg-fuchsia-600 text-white px-4 py-2 rounded-full shadow hover:bg-fuchsia-700 transition"
+        >
+          حالا بخرید!
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default CategoryItem;
